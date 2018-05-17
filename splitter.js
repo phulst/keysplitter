@@ -1,4 +1,6 @@
 const crypto = require('crypto');
+const QRCode = require('qrcode');
+
 
 function generateKey(numBytes) {
     return crypto.randomBytes(numBytes).toString('hex');
@@ -135,6 +137,26 @@ function decodeKey(str) {
  *  
  */
 
+/**
+ * generates 3 QR codes from an encrypted private key. This private key can be decrypted
+ * again with the password, and with 2 of the QR codes.
+ * @param key array of data to put in QR Code
+ * @param filename filename to store QR Code at
+ */
+function generateQrCode(str, filename, callback) {
+  let options = {
+    color: {
+      dark: '#00F',  // Blue dots
+      light: '#0000' // Transparent background
+    },
+    errorCorrectionLevel: 'M'
+  };
+
+  QRCode.toFile(filename, str, options, (err) => {
+    if (err) throw err;
+    if (callback) callback();
+  });
+}
 
 function restorePrivateKey(key1, key2) {
     let res1 = decodeKey(key1);
@@ -150,6 +172,14 @@ function restorePrivateKey(key1, key2) {
 const key = '3a1076bf45ab87712ad64ccb3b10217737f7faacbf2872e88fdd9a537d8fe266';
 
 keys = createCodes(key);
+
+for (let i=0; i<3; i++) {
+    generateQrCode(keys[i].toString('base64'), `split_${i+1}`);
+}
+
+
+
+
 restorePrivateKey(keys[0], keys[1]);
 
 
