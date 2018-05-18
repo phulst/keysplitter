@@ -143,6 +143,19 @@ describe('splitter', () => {
             toHex(pads[1]).should.equal("0c9e3f5766f8ee23ca3c7b");
             toHex(pads[2]).should.equal("cca3c42e9b028b50ab9618");
         });
+
+        it ("should throw an exception if pads don't match", () => {
+            let sk1 = splitKey1.substr(0,splitKey1.length -1) + 'a'; // manipulate one of the keys
+            let key1 = new Buffer(sk1, 'hex');
+            let key2 = new Buffer(splitKey2, 'hex');
+            let p1 = splitter.extractCode(key1);
+            let p2 = splitter.extractCode(key2);
+
+            let pads = splitter.retrievePads(p1, p2);
+            toHex(pads[0]).should.equal("e34d51393c516920fbab46");
+            toHex(pads[1]).should.equal("0c9e3f5766f8ee23ca3c7b");
+            toHex(pads[2]).should.equal("cca3c42e9b028b50ab9618");
+        });
     });
 
     describe("encode and decode", () => {
