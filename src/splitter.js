@@ -211,12 +211,12 @@ class Splitter {
         let p = pads.map((pad, i) => {
 
             if (pad.length === 0) {
-                throw new Error(`no pad key data for pad ${number}`);
+                throw new Error(`no pad key data for pad ${i}`);
             } else if (pad.length === 2) {
                 let p1 = asHex(pad[0]);
                 let p2 = asHex(pad[1]);
                 if (p1 !== p2) {
-                    throw new Error(`pad ${number} exists in both codes but do not match! ${p1} / ${p2}`);
+                    throw new Error(`pad ${i} exists in both codes but do not match! ${p1} / ${p2}`);
                 }
             }
             return pad[0];
