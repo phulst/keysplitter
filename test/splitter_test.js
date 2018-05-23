@@ -1,5 +1,7 @@
 const assert = require('assert');
 const should = require('chai').should();
+const expect = require('chai').expect;
+
 const Splitter = require('../src/splitter');
 
 let splitter;
@@ -151,10 +153,10 @@ describe('splitter', () => {
             let p1 = splitter.extractCode(key1);
             let p2 = splitter.extractCode(key2);
 
-            let pads = splitter.retrievePads(p1, p2);
-            toHex(pads[0]).should.equal("e34d51393c516920fbab46");
-            toHex(pads[1]).should.equal("0c9e3f5766f8ee23ca3c7b");
-            toHex(pads[2]).should.equal("cca3c42e9b028b50ab9618");
+            let badFn = () => {
+                splitter.retrievePads(p1, p2);
+            }
+            expect(badFn).to.throw(Error, /pad 2 exists in both codes but do not match/);
         });
     });
 

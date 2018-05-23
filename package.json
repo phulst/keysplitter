@@ -1,10 +1,10 @@
 {
   "name": "keysplitter",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.1.0",
+  "description": "Splits a crypto private key into 3 redundant, equally safe keys",
+  "main": "./src/splitter.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "author": "Peter Hulst",
   "license": "MIT",

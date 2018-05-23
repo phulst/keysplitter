@@ -36,6 +36,10 @@ class Splitter {
      * @returns the original private key
      */
     restorePrivateKey(splitKey1, splitKey2) {
+        // convert to Buffer type if passed in as String
+        splitKey1 = toBuffer(splitKey1);
+        splitKey2 = toBuffer(splitKey2);
+
         let res1 = this.extractCode(splitKey1);
         //printCode(res1);
 
@@ -287,6 +291,16 @@ function xor(a, b) {
  */
 function asHex(buf) {
     return buf ? (new Buffer(buf)).toString('hex') : '';
+}
+
+/**
+ * converts a given object to a Buffer if it isn't already one
+ * @param obj
+ * @returns {Buffer}
+ */
+function toBuffer(obj) {
+    // if type isn't already a Buffer, try to convert it to a Buffer
+    return (obj instanceof Buffer) ? obj : new Buffer(obj, 'hex');
 }
 
 /**
