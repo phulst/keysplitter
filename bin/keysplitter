@@ -1,7 +1,7 @@
-
+#!/usr/bin/env node
 
 const program = require('commander');
-const Splitter = require('./splitter');
+const Splitter = require('../src/splitter');
 const QRCode = require('qrcode');
 const splitter = new Splitter();
 
@@ -9,9 +9,10 @@ function generateQrCode(str, filename, callback) {
     let options = {
         color: {
             dark: '#000',  // Blue dots
-            light: '#0000' // Transparent background
+            light: '#FFF', // Transparent background
         },
-        errorCorrectionLevel: 'L'
+        errorCorrectionLevel: 'L',
+        scale: 7
     };
 
     QRCode.toFile(filename, str, options, (err) => {
@@ -30,7 +31,6 @@ program
   .description('split private key into 3 redundant split keys')
   .option('-b, --barcode', 'generate barcodes')
   .action((k, options) => {
-    console.log("splitting key " + k);
 
     let uid;
     splitter.splitPrivateKey(k).forEach((key, c) => {
