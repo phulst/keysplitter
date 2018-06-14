@@ -17,27 +17,23 @@ A command line tool is in the works, but it can be used in Node as follows:
 ```javascript
 const assert = require('assert');
 const Splitter = require('./splitter');
-
-splitter = new Splitter();
+const splitter = new Splitter();
 
 originalKey = '3a1076bf45ab87712ad64ccb3b10217737f7faacbf2872e88fdd9a537d8fe266';
 keys = splitter.splitPrivateKey(originalKey);
 console.dir(keys);
-010b81ea86f6207d633700331c0b70c1e06812e113bc865a780b9f84d1c756a4a892e438692421d9336e7e80e31e9dcd
-// 120b54bfc1e621935f684887410aed6c5e1accf7d51d065e0bbbfaf04965d6e4462ae5502421d9336e7e80e31e9dcd
-// 020b1e31af8c2bd50792344b810a56c956eef42dfd6cfcfb0bbbfaf04965d6e4462ae5509f84d1c756a4a892e43869
+//[ '010b5701057440e7740c9628a00ba62a63ea727b04871041c40b1168e6b2a5963e158dd64c1588c8714efcf8885ebc50',
+//  '020bda53f693d2a1c9ef2169640a6380696f3fc5439a6fb00b6d1173cb054cf37dbcfeec1588c8714efcf8885ebc50',
+//  '030b2f98bece0b577ff9746a1c0a676047acd4af8507bcda0b6d1173cb054cf37dbcfeec1168e6b2a5963e158dd64c' ]
 
-// restore private key with split key 0 and key 1
-assert(splitter.restorePrivateKey(keys[0], keys[1]) === originalKey);
-// true
+// We can restore the private key with split key 0 and key 1
+assert(splitter.restorePrivateKey(keys[0], keys[1]) === originalKey);  // true
 
-// restore private key with split key 0 and key 2
-assert(splitter.restorePrivateKey(keys[0], keys[2]) === originalKey);
-// true
+// or we can restore it using key 0 and key 2
+assert(splitter.restorePrivateKey(keys[0], keys[2]) === originalKey);  // true
 
-// restore private key with split key 1 and key 2
-assert(splitter.restorePrivateKey(keys[1], keys[2]) === originalKey);
-// true
+// or we can restore it using key 1 and key 2
+assert(splitter.restorePrivateKey(keys[1], keys[2]) === originalKey);  // true
 ```
 
 ## Command line tool
