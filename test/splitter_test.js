@@ -8,9 +8,22 @@ let splitter;
 let testKey = '3a1076bf45ab87712ad64ccb3b10217737f7faacbf2872e88fdd9a537d8fe266';
 
 
-function toHex(key) {
-    return key.toString('hex');
+// Convert a byte array to a hex string
+function toHex(bytes) {
+    for (var hex = [], i = 0; i < bytes.length; i++) {
+        hex.push((bytes[i] >>> 4).toString(16));
+        hex.push((bytes[i] & 0xF).toString(16));
+    }
+    return hex.join("");
 }
+// Convert a hex string to a byte array
+function hexToBytes(hex) {
+    let bytes = new Uint8Array(hex.length/2);
+    for (c = 0; c < hex.length/2; c += 1)
+    bytes[c] = parseInt(hex.substr(c*2, 2), 16);
+    return bytes;
+}
+
 
 describe('splitter', () => {
     beforeEach(() => {
@@ -111,7 +124,7 @@ describe('splitter', () => {
     describe("extractCode", () => {
         it ("should extract the right segments from a split key", () => {
             let splitKey = "010b2fc62109187bbb70f391e50bdeed47972ae7cbfb75f8810b87a892ec1b1d855a793e05163914ecdc4174541ff44a";
-            let key = new Buffer(splitKey, 'hex');
+            let key = hexToBytes(splitKey);
             let p = splitter.extractCode(key);
 
             p.partType.should.equal(0x01);
@@ -120,7 +133,7 @@ describe('splitter', () => {
         });
         it ("should extract the right OTP keys from a split key", () => {
             let splitKey = "010b2fc62109187bbb70f391e50bdeed47972ae7cbfb75f8810b87a892ec1b1d855a793e05163914ecdc4174541ff44a";
-            let key = new Buffer(splitKey, 'hex');
+            let key = hexToBytes(splitKey);
             let p = splitter.extractCode(key);
 
             p.partType.should.equal(0x01);
@@ -135,8 +148,8 @@ describe('splitter', () => {
         const splitKey3 = "020bf6b3b291dea90c218140540abe4b4bf30151f6df49f00be34d51393c516920fbab460c9e3f5766f8ee23ca3c7b";
 
         it ("should succesfully extract all OTP keys from 2 split keys", () => {
-            let key1 = new Buffer(splitKey1, 'hex');
-            let key2 = new Buffer(splitKey2, 'hex');
+            let key1 = hexToBytes(splitKey1);
+            let key2 = hexToBytes(splitKey2);
             let p1 = splitter.extractCode(key1);
             let p2 = splitter.extractCode(key2);
 
