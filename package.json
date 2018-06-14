@@ -1,6 +1,6 @@
 {
   "name": "keysplitter",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Splits a crypto private key into 3 redundant, equally safe keys",
   "main": "./src/splitter.js",
   "scripts": {
