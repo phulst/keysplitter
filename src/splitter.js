@@ -112,15 +112,20 @@ return {
         // generate 3 random One Time Pad keys, at the length of one third of the private key length
         let pads = this.createOTPKeys(keyLength);
 
-        return [
+        keys = [
             this.makeSplitKey(PART_COMBINATIONS[0], keySegments, keyLength, pads),
             this.makeSplitKey(PART_COMBINATIONS[1], keySegments, keyLength, pads),
             this.makeSplitKey(PART_COMBINATIONS[2], keySegments, keyLength, pads)
         ];
+        return keys.map((k) => { return bytesToHex(k); });
     },
 
-    toHexStr(key) {
-      return bytesToHex(key);
+    toBytes(hexStr) {
+      return hexToBytes(hexStr);
+    },
+
+    toHexStr(bytes) {
+      return bytesToHex(bytes);
     },
 
     /**
