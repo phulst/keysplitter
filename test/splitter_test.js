@@ -4,32 +4,21 @@ const expect = require('chai').expect;
 
 const Splitter = require('../src/splitter');
 
-let splitter;
+let splitter = new Splitter();
 let testKey = '3a1076bf45ab87712ad64ccb3b10217737f7faacbf2872e88fdd9a537d8fe266';
 
 
 // Convert a byte array to a hex string
 function toHex(bytes) {
-    for (var hex = [], i = 0; i < bytes.length; i++) {
-        hex.push((bytes[i] >>> 4).toString(16));
-        hex.push((bytes[i] & 0xF).toString(16));
-    }
-    return hex.join("");
+  return splitter.toHexStr(bytes);
 }
 // Convert a hex string to a byte array
 function hexToBytes(hex) {
-    let bytes = new Uint8Array(hex.length/2);
-    for (c = 0; c < hex.length/2; c += 1)
-    bytes[c] = parseInt(hex.substr(c*2, 2), 16);
-    return bytes;
+  return splitter.toBytes(hex);
 }
 
 
 describe('splitter', () => {
-    beforeEach(() => {
-        splitter = new Splitter();
-    });
-
 
     describe("splitInto3Parts", () => {
         it("should split the original key in 3 parts", () => {
@@ -109,15 +98,15 @@ describe('splitter', () => {
         });
         it ("key 1 should be 48 bytes long", () => {
             let splitKeys = splitter.splitPrivateKey(testKey);
-            splitKeys[0].should.have.lengthOf(48);
+            splitKeys[0].should.have.lengthOf(48*2);
         });
         it ("key 2 should be 47 bytes long", () => {
             let splitKeys = splitter.splitPrivateKey(testKey);
-            splitKeys[1].should.have.lengthOf(47);
+            splitKeys[1].should.have.lengthOf(47*2);
         });
         it ("key 3 should be 47 bytes long", () => {
             let splitKeys = splitter.splitPrivateKey(testKey);
-            splitKeys[2].should.have.lengthOf(47);
+            splitKeys[2].should.have.lengthOf(47*2);
         });
     });
 
