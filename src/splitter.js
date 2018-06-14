@@ -3,9 +3,11 @@
 // which indicate with private key segments and which pad keys it embeds.
 const PART_COMBINATIONS = [
     0x01,  // part 0 and 1
-    0x12,  // part 1 and 2
-    0x02   // part 0 and 2
+    0x02,  // part 1 and 2
+    0x03   // part 0 and 2
 ];
+// this will be incremented if the split method is changed
+const SPLIT_METHOD_VERSION = 0;
 
 const Splitter = function() {
 
@@ -30,15 +32,16 @@ const Splitter = function() {
 
   function decodeKey(keyparts, res, pads) {
       let parts = [];
-      if (res.partType === PART_COMBINATIONS[0]) {
+      let part_combination = (res.partType & 0x0F);
+      if (part_combination === PART_COMBINATIONS[0]) {
           // key type 1, contains part 1 and 2, encoded with pad key 1
           parts[0] = xor(res.part1, pads[0]);
           parts[1] = xor(res.part2, pads[0]);
-      } else if (res.partType === PART_COMBINATIONS[1]) {
+      } else if (part_combination === PART_COMBINATIONS[1]) {
           // key type 2, contains part 2 and 3, encoded with pad key 2
           parts[1] = xor(res.part1, pads[1]);
           parts[2] = xor(res.part2, pads[1]);
-      } else if (res.partType === PART_COMBINATIONS[2]) {
+      } else if (part_combination === PART_COMBINATIONS[2]) {
           // key type 3, contains part 1 and 3, encoded with pad key 3
           parts[0] = xor(res.part1, pads[2]);
           parts[2] = xor(res.part2, pads[2]);
@@ -233,7 +236,7 @@ return {
      */
     makeSplitKey(partType, keySegments, keyLength, pads) {
         // generate 3 random keys to be used
-        let buf = [partType];
+        let buf = [(SPLIT_METHOD_VERSION << 4) + partType];
         let p1, p2, keys;
         if (partType === PART_COMBINATIONS[0]) {
             p1 = xor(keySegments[0], pads[0]);

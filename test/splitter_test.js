@@ -78,13 +78,13 @@ describe('splitter', () => {
             key1.should.have.lengthOf(48);
         });
         it("should generate type 2 key", () => {
-            let key1 = splitter.makeSplitKey(0x12, this.keySegments, this.keyLength, this.pads);
-            key1[0].should.equal(0x12);
+            let key1 = splitter.makeSplitKey(0x02, this.keySegments, this.keyLength, this.pads);
+            key1[0].should.equal(0x02);
             key1.should.have.lengthOf(47);
         });
         it("should generate type 3 key", () => {
-            let key1 = splitter.makeSplitKey(0x02, this.keySegments, this.keyLength, this.pads);
-            key1[0].should.equal(0x02);
+            let key1 = splitter.makeSplitKey(0x03, this.keySegments, this.keyLength, this.pads);
+            key1[0].should.equal(0x03);
             key1.should.have.lengthOf(47);
         });
         // TODO: we could test more values in the buffer here but those are implictly tested in the
@@ -133,8 +133,8 @@ describe('splitter', () => {
 
     describe("retrievePads", () => {
         const splitKey1 = "010bd95d278679faee51d17d0a0b287641184b669eda57146e0b0c9e3f5766f8ee23ca3c7bcca3c42e9b028b50ab9618";
-        const splitKey2 = "120bc7a52f7611cf19d96683530a7e76b08afcab93ac285a0be34d51393c516920fbab46cca3c42e9b028b50ab9618";
-        const splitKey3 = "020bf6b3b291dea90c218140540abe4b4bf30151f6df49f00be34d51393c516920fbab460c9e3f5766f8ee23ca3c7b";
+        const splitKey2 = "020bc7a52f7611cf19d96683530a7e76b08afcab93ac285a0be34d51393c516920fbab46cca3c42e9b028b50ab9618";
+        const splitKey3 = "030bf6b3b291dea90c218140540abe4b4bf30151f6df49f00be34d51393c516920fbab460c9e3f5766f8ee23ca3c7b";
 
         it ("should succesfully extract all OTP keys from 2 split keys", () => {
             let key1 = hexToBytes(splitKey1);
