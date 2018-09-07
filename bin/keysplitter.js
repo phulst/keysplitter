@@ -23,7 +23,7 @@ function generateQrCode(str, filename, callback) {
 
 
 program
-  .version('0.2.0')
+  .version('0.4.0')
 
 // configure the split command
 program

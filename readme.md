@@ -35,6 +35,8 @@ and ultra-secure way.
 If any of your 3 keys get stolen, nothing is lost. It's useless to a thief, and you can
 still access your account using the other 2 keys.
 
+That said, use this tool at your own risk. I accept no responsibility if you lose your private key or crypto while using this tool.
+Always make sure your system isn't compromised. Also test restoring your private key from the split keys before destroying the original private key.
 
 ## using this library
 
