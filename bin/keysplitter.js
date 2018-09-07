@@ -32,13 +32,11 @@ program
   .option('-b, --barcode', 'generate barcodes')
   .action((k, options) => {
 
-    let uid;
+    // use a 4 digit random number in the filename.
+    let uid = Math.floor(Math.random()*9000) + 1000;
     splitter.splitPrivateKey(k).forEach((key, c) => {
       let str = key.toString('hex');
       // the unique filename is based on the last 4 characters of split key 1
-      if (!uid) {
-        uid = str.slice(-4);
-      }
       console.log(`\nkey ${c+1}:\n${str}`);
       if (options.barcode) {
         // generate barcode as well
@@ -47,7 +45,7 @@ program
     });
 
     if (options.barcode)
-      console.log('\ngenerated barcodes.');
+      console.log(`\ngenerated barcodes sk-${uid} png files.`);
   });
 
 program
