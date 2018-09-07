@@ -19,8 +19,8 @@ const assert = require('assert');
 const Splitter = require('./splitter');
 const splitter = new Splitter();
 
-originalKey = '3a1076bf45ab87712ad64ccb3b10217737f7faacbf2872e88fdd9a537d8fe266';
-keys = splitter.splitPrivateKey(originalKey);
+const originalKey = '3a1076bf45ab87712ad64ccb3b10217737f7faacbf2872e88fdd9a537d8fe266';
+let keys = splitter.splitPrivateKey(originalKey);
 console.dir(keys);
 //[ '010b5701057440e7740c9628a00ba62a63ea727b04871041c40b1168e6b2a5963e158dd64c1588c8714efcf8885ebc50',
 //  '020bda53f693d2a1c9ef2169640a6380696f3fc5439a6fb00b6d1173cb054cf37dbcfeec1588c8714efcf8885ebc50',
