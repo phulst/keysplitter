@@ -12,8 +12,12 @@
     "keysplitter": "bin/keysplitter.js"
   },
   "dependencies": {
+    "bip39": "^2.5.0",
+    "bitcore-lib": "^0.16.0",
+    "bitcore-mnemonic": "^1.7.0",
     "commander": "^2.15.1",
-    "qrcode": "^1.2.0"
+    "qrcode": "^1.2.0",
+    "secrets.js-grempe": "^1.1.0"
   },
   "devDependencies": {
     "chai": "^4.1.2",
